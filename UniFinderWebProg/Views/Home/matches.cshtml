@@ -1,0 +1,30 @@
+﻿@model IEnumerable<dynamic>
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniFinder - Kullanıcı Profilleri</title>
+    <link rel="stylesheet" href="~/css/matches.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="header">Kullanıcı Profilleri</h1>
+        <div class="profiles">
+            @foreach (var user in Model)
+            {
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <h2>@user.Username, @user.Age</h2>
+                        <p class="university">@user.University</p>
+                    </div>
+                    <div class="profile-body">
+                        <p>@user.Bio</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+﻿@{
+    var matchedUser = ViewBag.MatchedUser as UniFinderWebProg.Models.User;
+    var messages = ViewBag.Messages as List<UniFinderWebProg.Models.Message>;
+    var currentUserId = ViewBag.CurrentUserId as int?;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/Chat.css" asp-append-version="true">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Tinder Style Chat Screen</title>
+</head>
+<body>
+    <div class="chat-profile-container">
+        <main class="chat-container">
+            <div class="header">
+                <h3>@matchedUser.Username ile eşleştin</h3>
+                <div class="tcontrols">
+
+                    <button-icon type="submit" class="tno" onclick="location.href='@Url.Action("Match", "Home")'">
+                            <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                        </button-icon>
+                   
+                </div>
+
+            </div>
+            <div class="messages">
+                @foreach (var message in messages)
+                {
+                    <div class="message @(message.SenderId == currentUserId ? "sent" : "receive") @(message.IsRead ? "read" : "unread")">
+                        <div class="bubble">
+                            @message.Content
+                        </div>
+                        <div class="sent-at" style="">
+                            @message.SentAt.ToString("dd/MM/yyyy HH:mm")
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="input-container">
+                <form method="post" action="@Url.Action("SendMessage", "Home")">
+                    <input type="hidden" name="receiverId" value="@matchedUser.Id" />
+                    <input type="text" name="content" placeholder="Type a message..." id="messageInput" />
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </main>
+
+        <main class="profile">
+            <div class="profile-card">
+                <div class="kullanici-adi">
+                    <h3>@matchedUser.Username</h3>
+                </div>
+                <div class="photo-containers">
+                    <div class="slider-container">
+                        <button class="slider-button slider-button-left" onclick="moveSlide(-1)">❮</button>
+
+                        <div class="profile-card-image-container">
+                            @if (matchedUser?.UserPhotos != null && matchedUser.UserPhotos.Any())
+                            {
+                                @foreach (var photo in matchedUser.UserPhotos)
+                                {
+                                    <img src="@photo.PhotoPath" alt="User Photo" class="user-photo" style="width: 436px;height: 404px; display:none;">
+                                }
+                            }
+                            else
+                            {
+                                <img src="/images/default-user-photo.jpg" alt="Default User Photo" class="user-photo" style="width: 436px;height: 404px; ">
+                            }
+                        </div>
+
+                        <button class="slider-button slider-button-right" onclick="moveSlide(1)">❯</button>
+                    </div>
+                </div>
+
+
+                <div class="box">
+                    <div class="yas">
+                        <label class="yas-label">
+                            <i class="fa fa-birthday-cake" aria-hidden="true"> </i> Doğum Tarihi
+                        </label>
+                    </div>
+                    <div class="bio-textarea">
+                        <p class="yas-text" style="width: auto;; height: 20px;" cols="30" name="ad">
+                            @matchedUser.BirthDate.ToString("dd/MM/yyyy")
+                        </p>
+                    </div>
+                </div>
+                <hr></hr>
+                <div class="box">
+                    <div class="bio">
+                        <label class="bio-label">
+                            <i class="fa fa-quote-left" aria-hidden="true"> </i>Hakkımda
+                        </label>
+                    </div>
+                    <div class="bio-div">
+                        <p id="bio-text" style="width: auto;" cols="30" name="bio">
+                            @matchedUser.Bio
+                        </p>
+                    </div>
+                </div>
+                <hr></hr>
+                <div class="box">
+                    <div class="universite">
+                        <label class="universite-label">
+                            <i class="fa fa-graduation-cap" aria-hidden="true"></i> Üniversite
+                        </label>
+                    </div>
+                    <div class="bio-textarea">
+                        <p class="universite-text" rows="5" style="width: auto;; height: 20px;" cols="30" name="bio">
+                            @matchedUser.University
+                        </p>
+                    </div>
+                </div>
+                <hr></hr>
+                <div class="box">
+                    <div class="sehir">
+                        <label class="sehir-label">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i> Şehir
+                        </label>
+                    </div>
+                    <div class="bio-textarea">
+                        <p class="sehir-text" rows="5" style="width: auto;; height: 20px;" cols="30" name="bio">
+                            @matchedUser.Location
+                        </p>
+                    </div>
+                </div>
+                <hr></hr>
+            </div>
+        </main>
+    </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Fotoğraflar dizisi (ViewBag üzerinden dinamik olarak verilmiş)
+        const images = @Html.Raw(Json.Serialize(matchedUser.UserPhotos.Select(p => p.PhotoPath).ToList() ?? new List<string>()));
+        let currentImageIndex = 0; // Başlangıçta gösterilecek fotoğraf
+
+        // Fotoğraf değiştirme fonksiyonu
+        function moveSlide(direction) {
+            currentImageIndex += direction;
+
+            // Döngüsel geçiş
+            if (currentImageIndex < 0) {
+                currentImageIndex = images.length - 1;
+            }
+            if (currentImageIndex >= images.length) {
+                currentImageIndex = 0;
+            }
+
+            // Görselleri güncelleme
+            const imageElements = document.querySelectorAll('.profile-card-image-container img');
+            if (imageElements.length > 0) {
+                // Tüm fotoğrafları gizle
+                imageElements.forEach(img => img.style.display = 'none');
+
+                // Yeni fotoğrafı göster
+                imageElements[currentImageIndex].style.display = 'block';
+            }
+        }
+
+        // Sayfa yüklendiğinde ilk fotoğrafı göstermek için
+        window.onload = function () {
+            if (images.length > 0) {
+                const imageElements = document.querySelectorAll('.profile-card-image-container img');
+                if (imageElements.length > 0) {
+                    // İlk fotoğrafı göster
+                    imageElements[0].style.display = 'block';
+                }
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+﻿@model UniFinderWebProg.Models.User
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unifinder</title>
+    <link rel="stylesheet" href="~/css/KendiProfil-Edit.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playwrite+IE+Guides&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <form method="post" enctype="multipart/form-data">
+        <main class="profile">
+            <div class="profile-card">
+                <button-icon type="submit" class="tno" onclick="location.href='@Url.Action("KendiProfil", "Home")'">
+                    <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                </button-icon>
+                <div class="photo-containers">
+                    @if (Model.UserPhotos != null && Model.UserPhotos.Any())
+                    {
+                        int photoCount = Model.UserPhotos.Count; // Mevcut fotoğraf sayısı
+                        int maxPhotos = 3; // Maksimum fotoğraf sayısı
+
+                        // Mevcut fotoğrafları göster
+                        foreach (var photo in Model.UserPhotos)
+                        {
+                            <div class="photo-container">
+                                <div class="photo-card">
+                                    <!-- Fotoğrafı göster -->
+                                    <img src="@photo.PhotoPath" alt="Profile Photo" class="profile-photo1" style="width: 100%; height: 100%; object-fit: cover;">
+
+                                    <!-- Fotoğrafı kaldırma butonu -->
+                                    <button class="action-btn remove-photo" type="button" data-photo-id="@photo.Id">&times;</button>
+                                </div>
+                            </div>
+                        }
+
+                        // Eksik olan boş fotoğraf alanlarını doldur
+                        for (int i = photoCount; i < maxPhotos; i++)
+                        {
+                            <div class="photo-container">
+                                <div class="photo-card">
+                                    <!-- Yeni fotoğraf ekleme alanı -->
+                                    <button type="button" class="action-btn add-photo-btn" id="add-photo-btn" style="background: linear-gradient(to bottom, #dd83d6, #7bcdee);">+</button>
+                                    <input type="file" name="photos" accept="image/*" class="action-btn add-photo" id="file-input" style="display: none;">
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        // Hiç fotoğraf yoksa tamamen boş alan göster
+                        for (int i = 0; i < 3; i++)
+                        {
+                            <div class="photo-container">
+                                <div class="photo-card">
+                                    <!-- Yeni fotoğraf ekleme alanı -->
+                                    <button type="button" class="action-btn add-photo-btn" id="add-photo-btn" style="background: linear-gradient(to bottom, #dd83d6, #7bcdee);">+</button>
+                                    <input type="file" name="photos" accept="image/*" class="action-btn add-photo" id="file-input" style="display: none;">
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+
+                <div class="photo-label">
+                    <label class="label1">Fotoğraf Ekleyerek Profilinin Tamamlanmasına Katkı Sağla</label>
+                </div>
+
+                <div class="bio-label">
+                    <label for="bio" class="label2">Bio</label>
+                    <div>
+                        <textarea id="bio" name="bio" class="bio-text" placeholder="Kendinden Bahset">@Model.Bio</textarea>
+                    </div>
+                </div>
+
+                <div class="email">
+                    <label for="email" class="email-label">Email</label>
+                    <div>
+                        <input type="email" id="email" name="email" class="email-text" placeholder="Email" value="@Model.Email">
+                    </div>
+                </div>
+
+                <div class="universite">
+                    <label for="university" class="universite-label">Üniversite</label>
+                    <div>
+                        <input type="text" id="university" name="university" class="universite-text" placeholder="Üniversite" value="@Model.University">
+                    </div>
+                </div>
+
+                <div class="lokasyon">
+                    <label for="location" class="lokasyon-label">Lokasyon</label>
+                    <div>
+                        <input type="text" id="location" name="location" class="lokasyon-text" placeholder="Lokasyon" value="@Model.Location">
+                    </div>
+                </div>
+
+                <div class="save">
+                    <button class="save-button" type="submit">Kaydet</button>
+                </div>
+
+            </div>
+        </main>
+    </form>
+
+    <script>
+        // Butona tıklandığında dosya inputunu tetiklemek için
+        document.getElementById('add-photo-btn').addEventListener('click', function () {
+            // Gizli input öğesini tetikle
+            document.getElementById('file-input').click();
+        });
+
+        // Fotoğraf seçildikten sonra işleme
+        document.getElementById('file-input').addEventListener('change', function () {
+            const file = this.files[0];
+            const photoCard = this.closest('.photo-card');
+            const photo = photoCard.querySelector('.profile-photo');
+            const removePhotoBtn = photoCard.querySelector('.remove-photo');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    photo.src = e.target.result;
+                    photo.style.display = 'block';
+
+                    removePhotoBtn.style.display = 'flex';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.querySelectorAll('.photo-card').forEach((card) => {
+            const removePhotoBtn = card.querySelector('.remove-photo');
+            const photo = card.querySelector('.profile-photo');
+
+            removePhotoBtn.addEventListener('click', () => {
+                photo.src = '';
+                photo.style.display = 'none';
+
+                removePhotoBtn.style.display = 'none';
+            });
+        });
+    </script>
+
+</body>
+</html>

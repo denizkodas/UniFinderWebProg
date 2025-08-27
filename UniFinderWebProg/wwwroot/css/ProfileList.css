@@ -1,0 +1,313 @@
+/* Genel Ayarlar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+}
+
+/* Container Genel Ayarý */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+    display: block;
+    margin-left: 70px;
+}
+
+/* Sol Menü */
+.sidebar {
+    width: 300px;
+    background: linear-gradient(to bottom, #dd83d6, #7bcdee);
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+/* Ýkon Menü */
+.icon-menu {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.icon {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+    .icon:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+/* Eþleþmeler Kýsmý */
+.section-header {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-bottom: 2px solid #f4f4f4;
+}
+
+    .section-header span {
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+.card-image {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+    .card-image.yellow {
+        background-color: #ffc107;
+    }
+
+    .card-image.red {
+        background-color: #ff6b6b;
+    }
+
+.your-profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+    .your-profile-image:hover {
+        transform: scale(1.05);
+    }
+
+.matches-profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.card-text {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Profil Bölümü */
+.profile {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.profile-card {
+    width: 350px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    margin: auto; /* Profil kartýný ortalamak için */
+}
+
+.profile-card-image {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.profile-info {
+    padding: 20px;
+    background: linear-gradient(to bottom, #dd83d6, #7bcdee);
+}
+
+    .profile-info h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: white;
+    }
+
+.progress-bar {
+    background: #e0e0e0;
+    height: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    position: absolute;
+    left: 20px; /* Barý sola yaslamak için */
+    width: calc(100% - 40px);
+}
+
+.progress {
+    background: #dd83d6;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.edit-button {
+    background: #7bcdee;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Slider Oklarý */
+.slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-200%);
+    font-size: 30px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Opaklýk geçiþi */
+}
+
+    .slider-button:hover {
+        opacity: 1;
+    }
+
+.slider-button-left {
+    left: 10px;
+}
+
+.slider-button-right {
+    right: 10px;
+}
+
+/* Tetikleyiciler için Kontroller */
+.tcontrols {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+    .tcontrols div {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+.tno {
+    color: #ff5864;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.ti {
+    color: #ffc107;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.tyes {
+    color: #28a745;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+.tno:hover {
+    transform: scale(1.2);
+}
+.ti:hover {
+    transform: scale(1.2);
+}
+.tyes:hover {
+    transform: scale(1.2);
+}
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Yarý saydam arka plan */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Diðer öðelerin üstünde olsun */
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#close-popup {
+    margin-top: 10px;
+    padding: 5px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+    #close-popup:hover {
+        background-color: #45a049;
+    }
+

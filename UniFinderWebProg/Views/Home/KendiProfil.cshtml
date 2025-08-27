@@ -1,0 +1,97 @@
+﻿@model UniFinderWebProg.Models.User
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unifinder</title>
+    <link rel="stylesheet" href="~/css/KendiProfil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <!-- Profil Kartı -->
+    <main class="profile">
+        <div class="profile-card swipe-card">
+
+            <div class="profile-card">
+                <!-- Fotoğraf Geçişi -->
+                <div class="slider-container">
+                    <button class="slider-button slider-button-left" onclick="moveSlide(-1)">❮</button>
+                    @if (Model.UserPhotos.Any())
+                    {
+                        var photoPaths = Model.UserPhotos.Select(p => p.PhotoPath).ToList();
+                        foreach (var photoPath in photoPaths)
+                        {
+                            <img src="@photoPath" alt="User Photo" class="user-photo" style="width: 350px;height: 404px;">
+                        }
+                    }
+                    else
+                    {
+                        <img src="~/images/default-user-photo.jpg" alt="Default User Photo" class="user-photo" />
+                        <p>Fotoğraf bulunamadı.</p>
+                    }
+                    <button class="slider-button slider-button-right" onclick="moveSlide(1)">❯</button>
+                </div>
+
+                <!-- Profil Bilgileri -->
+                <div class="profile-info">
+                    <h2 id="profile-name">
+                        @Model.Username, @Model.BirthDate.ToString("dd MMM yyyy") @Model.University
+                    </h2>
+                    <button class="info" id="info-button">
+                        <b>Bilgilerimi Düzenle</b>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Fotoğraf dizisi
+        const images = @Html.Raw(Json.Serialize(Model.UserPhotos.Select(p => p.PhotoPath).ToList()));
+
+        let currentImageIndex = 0;
+
+        // İlk fotoğrafı göster
+        document.addEventListener("DOMContentLoaded", function () {
+            showSlide(currentImageIndex);
+        });
+
+        // Fotoğraf geçiş fonksiyonu
+        function moveSlide(direction) {
+            currentImageIndex += direction;
+
+            // Döngüsel geçiş
+            if (currentImageIndex < 0) {
+                currentImageIndex = images.length - 1;
+            }
+            if (currentImageIndex >= images.length) {
+                currentImageIndex = 0;
+            }
+
+            showSlide(currentImageIndex);
+        }
+
+        // Görseli güncelleyen fonksiyon
+        function showSlide(index) {
+            const photos = document.querySelectorAll(".user-photo");
+
+            // Tüm fotoğrafları gizle
+            photos.forEach(photo => photo.style.display = "none");
+
+            // Seçilen fotoğrafı göster
+            photos[index].style.display = "block";
+        }
+
+        const infoButton = document.getElementById("info-button");
+        infoButton.addEventListener("click", () => {
+            window.location.href = "/Home/KendiProfilEdit";
+        });
+    </script>
+
+</body>
+</html>

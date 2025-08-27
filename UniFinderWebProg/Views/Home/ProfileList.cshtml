@@ -1,0 +1,212 @@
+﻿@model UniFinderWebProg.Models.User
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unifinder</title>
+    <link rel="stylesheet" href="~/css/ProfileList.css" asp-append-version="true">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playwrite+IE+Guides&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="match-popup" class="popup-overlay" style="display: none;">
+        <div class="popup-content">
+            <h2>Bu Bir Eşleşme!</h2>
+            <p>Yeni bir eşleşme gerçekleşti. Harika biriyle eşleştin!</p>
+            <button id="close-popup">Tamam</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Profil Kartı -->
+        <main class="profile">
+            <div class="profile-card swipe-card">
+                @if (Model != null)
+                {
+                    <div class="profile-card">
+                        <div class="slider-container">
+                            <button class="slider-button slider-button-left" onclick="moveSlide(-1)">❮</button>
+                            @if (Model?.UserPhotos != null && Model.UserPhotos.Any())
+                            {
+                                var photoPaths = Model.UserPhotos.Select(p => p.PhotoPath).ToList();
+                                foreach (var photoPath in photoPaths)
+                                {
+                                    <img src="@photoPath" alt="User Photo" class="user-photo" style="width: 350px;height: 404px;">
+                                }
+                            }
+                            else
+                            {
+                                <img src="~/images/default-user-photo.jpg" alt="Default User Photo" class="user-photo" />
+                            }
+                            <button class="slider-button slider-button-right" onclick="moveSlide(1)">❯</button>
+                        </div>
+
+                        <div class="profile-info">
+                            <h2 id="profile-name">
+                                @Model.Username, @Model.BirthDate.ToString("dd/MM/yyyy")
+                                <br />@Model.University
+                            </h2>
+
+                            <form method="post" action="/Home/HandleLikeDislike">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="likerId" value="@ViewBag.LikerId" />
+                                <input type="hidden" name="likedId" value="@Model?.Id" />
+                                <input type="hidden" id="is-like" name="isLike" value="" />
+
+                                <div class="tcontrols">
+                                    <button-icon type="button" class="tno" onclick="submitLikeDislike(false)">
+                                        <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                                    </button-icon>
+
+                                    <button-icon type="button" class="ti" onclick="window.location.href='@Url.Action("ProfileInfo", "Home", new { userId = Model.Id })'">
+                                        <i class="fa fa-info fa-2x" aria-hidden="true"></i>
+                                    </button-icon>
+
+                                    <button-icon type="button" class="tyes" onclick="submitLikeDislike(true)">
+                                        <i class="fa fa-heart fa-2x" aria-hidden="true"></i>
+                                    </button-icon>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="profile-card">
+                        <div class="slider-container">
+                            <img src="~/images/default-user-photo.jpg" alt="Default User Photo" class="user-photo" />
+                        </div>
+                        <div class="profile-info">
+                            <p>Eşleşilecek uygun kullanıcı yok!</p>
+                        </div>
+                        <style>
+                            .tcontrols {
+                                display: none; /* Butonları gizle */
+                            }
+                        </style>
+                    </div>
+                }
+
+                @if (ViewBag.NoUsersLeft == true)
+                {
+                    <p></p>
+                    <style>
+                        .tcontrols {
+                            display: none; /* Butonları gizle */
+                        }
+                    </style>
+                }
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const images = @Html.Raw(Json.Serialize(Model?.UserPhotos?.Select(p => p.PhotoPath).ToList() ?? new List<string>()));
+
+        let currentImageIndex = 0;
+        let isMatch = false;  // Eşleşme durumu
+
+        document.addEventListener("DOMContentLoaded", function () {
+            showSlide(currentImageIndex);
+
+            // TempData kontrolü ile eşleşme mesajı varsa pop-up'ı göster
+            if ('@TempData["SuccessMessage"]') {
+                showMatchPopup();  // Eşleşme mesajı varsa, pop-up'ı göster
+            }
+
+            // Eşleşme sayısını güncelle
+            fetchMatchCount();
+        });
+
+        // Resimleri gezmek için
+        function moveSlide(direction) {
+            currentImageIndex += direction;
+
+            if (currentImageIndex < 0) {
+                currentImageIndex = images.length - 1;
+            }
+            if (currentImageIndex >= images.length) {
+                currentImageIndex = 0;
+            }
+
+            showSlide(currentImageIndex);
+        }
+
+        // Resimleri gösterme fonksiyonu
+        function showSlide(index) {
+            const photos = document.querySelectorAll(".user-photo");
+            photos.forEach(photo => photo.style.display = "none");
+            if (photos[index]) {
+                photos[index].style.display = "block";
+            }
+        }
+
+        // Beğeni/Beğenmeme butonlarına basıldığında çalışacak fonksiyon
+        function submitLikeDislike(isLike) {
+            const form = document.querySelector('form');
+            document.getElementById('is-like').value = isLike;
+            form.submit();
+
+            // Sunucuya Like/Dislike işlemini gönderip eşleşme durumunu kontrol et
+            fetch('/Home/HandleLikeDislike', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    likerId: document.getElementById('likerId').value,
+                    likedId: document.getElementById('likedId').value,
+                    isLike: isLike
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.isMatch) {
+                        showMatchPopup();  // Eşleşme varsa popup'ı göster
+                    }
+                    // Eşleşme sayısını tekrar güncelle
+                    fetchMatchCount();
+                })
+                .catch(error => console.log('Error checking match status:', error));
+        }
+
+        // Pop-up'ı gösterme fonksiyonu
+        function showMatchPopup() {
+            document.getElementById("match-popup").style.display = "block";
+        }
+
+        // Pop-up'ı kapatmak için
+        document.getElementById("close-popup").addEventListener("click", function () {
+            document.getElementById("match-popup").style.display = "none";
+        });
+
+        // Eşleşme sayısını alıp UI'ye yansıtma
+        function fetchMatchCount() {
+            fetch('/home/getmatchcount', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Eşleşme sayısını UI'ye yansıtma
+                        document.getElementById('match-count').innerText = `(${data.matchCount})`;
+                    } else {
+                        console.log(data.message); // Hata mesajı
+                    }
+                })
+                .catch(error => console.log('Error updating match count:', error));
+        }
+    </script>
+
+</body>
+</html>

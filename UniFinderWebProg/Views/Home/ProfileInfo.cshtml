@@ -1,0 +1,154 @@
+﻿@model UniFinderWebProg.Models.User
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unifinder</title>
+    <link rel="stylesheet" href="~/css/info.css" asp-append-version="true">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playwrite+IE+Guides&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Profil Kartı -->
+    <main class="profile">
+
+        <div class="profile-card">
+            <button-icon type="submit" class="tno" onclick="location.href='@Url.Action("ProfileList", "Home")'">
+                <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+            </button-icon>
+            <div class="photo-containers">
+                <!-- Fotoğraf Geçişi -->
+                <div class="slider-container">
+                    <button class="slider-button slider-button-left" onclick="moveSlide(-1)">❮</button>
+
+                    @if (Model.UserPhotos.Any())
+                    {
+                        var photoPaths = Model.UserPhotos.Select(p => p.PhotoPath).ToList();
+                        foreach (var photoPath in photoPaths)
+                        {
+                            <img src="@photoPath" alt="User Photo" class="user-photo" style="width: 350px;height: 404px;">
+                        }
+                    }
+                    else
+                    {
+                        <img src="~/images/default-user-photo.jpg" alt="Default User Photo" class="user-photo" />
+                        <p>Fotoğraf bulunamadı.</p>
+                    }
+
+                    <button class="slider-button slider-button-right" onclick="moveSlide(1)">❯</button>
+                </div>
+            </div>
+
+            <!-- Hakkımda Bölümü -->
+            <div class="bio-label">
+                <label class="label2">
+                    <i class="fa fa-quote-left" aria-hidden="true"></i> Hakkımda
+                </label>
+                <p class="bio-text" id="bio" rows="5" style="width: 300px; height: auto;" cols="30" name="bio">
+                    @Model.Bio
+                </p>
+            </div>
+
+            <hr>
+
+            <!-- Üniversite Bölümü -->
+            <div class="universite">
+                <label class="universite-label">
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i> Üniversite
+                </label>
+                <p class="universite-text" id="bio" rows="5" style="width: 300px; height: 16px;" cols="30" name="bio">
+                    @Model.University
+                </p>
+            </div>
+
+            <hr>
+
+            <!-- Şehir Bölümü -->
+            <div class="sehir">
+                <label class="sehir-label">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i> Şehir
+                </label>
+                <p class="sehir-text" id="bio" rows="5" style="width: 300px; height: 16px;" cols="30" name="bio">
+                    @Model.Location
+                </p>
+            </div>
+
+        </div>
+
+        <script>
+            document.querySelectorAll('.photo-card').forEach((card) => {
+                const addPhotoBtn = card.querySelector('.add-photo');
+                const removePhotoBtn = card.querySelector('.remove-photo');
+                const photo = card.querySelector('.profile-photo');
+
+                addPhotoBtn.addEventListener('click', () => {
+                    const photoInput = document.createElement('input');
+                    photoInput.type = 'file';
+                    photoInput.accept = 'image/*';
+                    photoInput.style.display = 'none';
+
+                    photoInput.addEventListener('change', () => {
+                        const file = photoInput.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                                photo.src = e.target.result;
+                                photo.style.display = 'block';
+
+                                addPhotoBtn.style.display = 'none';
+                                removePhotoBtn.style.display = 'flex';
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+
+                    document.body.appendChild(photoInput);
+                    photoInput.click();
+                    document.body.removeChild(photoInput);
+                });
+
+                removePhotoBtn.addEventListener('click', () => {
+                    photo.src = '';
+                    photo.style.display = 'none';
+
+                    addPhotoBtn.style.display = 'flex';
+                    removePhotoBtn.style.display = 'none';
+                });
+            });
+
+            // Fotoğraflar dizisi
+            const images = @Html.Raw(Json.Serialize(Model.UserPhotos.Select(p => p.PhotoPath).ToList()));
+
+            let currentImageIndex = 0; // Başlangıç fotoğrafı
+
+            // Fotoğraf değiştirme fonksiyonu
+            function moveSlide(direction) {
+                currentImageIndex += direction;
+
+                // Döngüsel geçiş
+                if (currentImageIndex < 0) {
+                    currentImageIndex = images.length - 1;
+                }
+                if (currentImageIndex >= images.length) {
+                    currentImageIndex = 0;
+                }
+
+                // Görseli güncelle
+                document.getElementById('profile-image').src = images[currentImageIndex];
+            }
+
+            // Başlangıçta ilk fotoğrafı yükle
+            window.onload = function () {
+                document.getElementById('profile-image').src = images[currentImageIndex];
+            };
+
+        </script>
+
+    </main>
+</body>
+</html>

@@ -1,0 +1,186 @@
+﻿/* Genel Ayarlar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+}
+
+/* Container Genel Ayarı */
+.container {
+    display: flex;
+    height: 100%;
+}
+
+/* Sol Menü */
+.sidebar {
+    width: 300px;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #dd83d6, #7bcdee);
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.profile-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 9px;
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+    display: block;
+    margin-left: 70px;
+}
+
+/* Menü İkonları */
+.icon-menu {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.icon {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+    .icon:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+/* Eşleşmeler Kısmı */
+.section-header {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-bottom: 2px solid #f4f4f4;
+}
+
+    .section-header span {
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+.pb-3 {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.card-image {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+    .card-image.yellow {
+        background-color: #ffc107;
+    }
+
+    .card-image.red {
+        background-color: #ff6b6b;
+    }
+
+.matches-profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.card-text {
+    font-size: 14px;
+    color: #333;
+}
+
+.user-photo {
+    width: 350px;
+    height: 404px;
+    transition: transform 0.3s ease;
+}
+.tcontrols {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+    .tcontrols div {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+.tno {
+    color: #ff5864;
+}
+
+.ti {
+    color: #ffc107;
+}
+
+.tyes {
+    color: #28a745;
+}
+
+

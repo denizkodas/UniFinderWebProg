@@ -1,0 +1,154 @@
+﻿@{
+    Layout = null;
+}
+
+
+@model UniFinderWebProg.Models.User
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Register.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Kaydol</h1>
+
+        <!-- Mesajları Göster -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
+        <!-- Form -->
+        <form method="post" asp-action="Register" asp-controller="Account" enctype="multipart/form-data" id="registerForm">
+            <div class="form-group">
+                <label for="username">Kullanıcı Adı</label>
+                <input type="text" id="username" name="Username" class="form-control" placeholder="Kullanıcı Adı" required maxlength="100" value="@Model?.Username" />
+                @if (ViewData.ModelState["Username"]?.Errors.Count > 0)
+                {
+                    <span class="text-danger">@ViewData.ModelState["Username"].Errors[0].ErrorMessage</span>
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-Posta</label>
+                <input type="email" id="email" name="Email" class="form-control" placeholder="E-Posta" required value="@Model?.Email" />
+                @if (ViewData.ModelState["Email"]?.Errors.Count > 0)
+                {
+                    <span class="text-danger">@ViewData.ModelState["Email"].Errors[0].ErrorMessage</span>
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="university">Üniversite</label>
+                <input type="text" id="university" name="University" class="form-control" placeholder="Üniversite" required maxlength="100" />
+            </div>
+
+            <div class="form-group">
+                <label for="birthdate">Doğum Tarihi</label>
+                <input type="date" id="birthdate" name="BirthDate" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="bio">Hakkında</label>
+                <textarea id="bio" name="Bio" class="form-control" placeholder="Kısa bir açıklama yapın"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Cinsiyet</label>
+                <select id="gender" name="Gender" class="form-control" required>
+                    <option value="Male">Erkek</option>
+                    <option value="Female">Kadın</option>
+                    <option value="Other">Diğer</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="interestedIn">İlgi Alanı</label>
+                <select id="interestedIn" name="InterestedIn" class="form-control" required>
+                    <option value="Male">Erkek</option>
+                    <option value="Female">Kadın</option>
+                    <option value="Both">Her İkisi</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Şehir</label>
+                <input type="text" id="location" name="Location" class="form-control" placeholder="Şehir" />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Şifre</label>
+                <input type="password" id="password" name="Password" class="form-control" placeholder="Şifre" required />
+                @if (ViewData.ModelState["Password"]?.Errors.Count > 0)
+                {
+                    <span class="text-danger">@ViewData.ModelState["Password"].Errors[0].ErrorMessage</span>
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Şifreyi Onayla</label>
+                <input type="password" id="confirmPassword" name="ConfirmPassword" class="form-control" placeholder="Şifreyi Onayla" required />
+                <span id="confirmPasswordError" class="text-danger" style="display: none;">Şifreler uyuşmuyor!</span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" style=" padding: 10px 20px;font-size: 1rem;color: white;background: linear-gradient(to bottom, #dd83d6, #7bcdee);border: none;border-radius: 15px;cursor: pointer;transition: background 0.3s;margin-left: 115px;">
+                    Kayıt Ol
+                </button>
+            </div>
+        </form>
+
+        <div class="login-link">
+            <p>Zaten hesabınız var mı? <a asp-controller="Account" asp-action="Login">Giriş Yap</a></p>
+        </div>
+    </div>
+
+    <!-- Şifre Doğrulama için JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const passwordField = document.getElementById("password");
+            const confirmPasswordField = document.getElementById("confirmPassword");
+            const confirmPasswordError = document.getElementById("confirmPasswordError");
+
+            // Şifreyi onayla alanındaki her input değişikliğinde çalışacak olay
+            confirmPasswordField.addEventListener("input", function () {
+                if (passwordField.value !== confirmPasswordField.value) {
+                    confirmPasswordError.style.display = "inline"; // Hata mesajını göster
+                    confirmPasswordField.classList.add("is-invalid"); // Hata durumunda kırmızı renk göster
+                } else {
+                    confirmPasswordError.style.display = "none"; // Hata mesajını gizle
+                    confirmPasswordField.classList.remove("is-invalid"); // Kırmızı rengi kaldır
+                }
+            });
+
+            // Şifre alanındaki her input değişikliğinde çalışacak olay
+            passwordField.addEventListener("input", function () {
+                if (passwordField.value !== confirmPasswordField.value) {
+                    confirmPasswordError.style.display = "inline"; // Hata mesajını göster
+                    confirmPasswordField.classList.add("is-invalid"); // Hata durumunda kırmızı renk göster
+                } else {
+                    confirmPasswordError.style.display = "none"; // Hata mesajını gizle
+                    confirmPasswordField.classList.remove("is-invalid"); // Kırmızı rengi kaldır
+                }
+            });
+        });
+    </script>
+</body>
+</html>

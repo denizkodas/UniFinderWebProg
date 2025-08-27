@@ -1,0 +1,70 @@
+/* Genel Stil */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Profillerin Konteyneri */
+.profiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Profil Kartý */
+.profile-card {
+    background-color: white;
+    width: 250px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+    .profile-card:hover {
+        transform: scale(1.05);
+    }
+
+/* Profil Baþlýk */
+.profile-header {
+    background-color: #7bcdee;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+    .profile-header h2 {
+        margin: 0;
+    }
+
+    .profile-header .university {
+        font-size: 1em;
+        margin-top: 5px;
+    }
+
+/* Profil Ýçeriði */
+.profile-body {
+    padding: 15px;
+    text-align: center;
+}
+
+    .profile-body p {
+        font-size: 1em;
+        color: #555;
+    }

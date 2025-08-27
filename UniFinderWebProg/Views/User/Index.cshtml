@@ -1,0 +1,101 @@
+﻿@model UniFinderWebProg.Models.User
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Register.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Kaydol</h1>
+
+        <!-- Mesajları Göster -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
+        <!-- Form -->
+        <form asp-action="Register" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="text" placeholder="Kullanıcı Adı" id="username" name="Name" required maxlength="100" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="email" placeholder="E-mail" id="email" name="Email" required class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="text" placeholder="Üniversite" id="university" name="University" required maxlength="100" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="birthdate">Doğum Tarihi:</label>
+                <input type="date" id="birthdate" name="BirthDate" required class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <textarea placeholder="Hakkında" id="bio" name="Bio" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="profilePictureUrl">Profil Resmi:</label>
+                <input type="file" id="profilePictureUrl" name="ProfilePictureUrl" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Cinsiyet:</label>
+                <select id="gender" name="Gender" required class="form-control">
+                    <option value="Male">Erkek</option>
+                    <option value="Female">Kadın</option>
+                    <option value="Other">Diğer</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="interestedIn">İlgi Alanı:</label>
+                <select id="interestedIn" name="InterestedIn" required class="form-control">
+                    <option value="Male">Erkek</option>
+                    <option value="Female">Kadın</option>
+                    <option value="Both">Her İkisi</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="text" placeholder="Şehir" id="location" name="Location" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="password" placeholder="Şifre" id="password" name="Password" required class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="password" placeholder="Şifreyi Onayla" id="confirmPassword" name="ConfirmPassword" required class="form-control" />
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+            </div>
+        </form>
+
+        <div class="login-link">
+            <p>Zaten hesabınız var mı? <a asp-controller="User" asp-action="Login">Giriş Yap</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap</title>
+    <link rel="stylesheet" href="~/css/Login.css" asp-append-version="true">
+</head>
+<body>
+    <div class="container">
+        <h1>Giriş Yap</h1>
+
+        <!-- TempData'dan gelen mesaj varsa gösterilecek -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
+        <!-- Giriş Formu -->
+        <form id="login-form" method="post" asp-action="Login" asp-controller="Account">
+            <div class="form-group">
+                <input type="text" placeholder="Kullanıcı Adı veya E-posta" id="usernameOrEmail" name="usernameOrEmail" required>
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Şifre" id="password" name="password" required>
+            </div>
+            <div class="form-group forgot-password">
+                <a asp-controller="Account" asp-action="ForgotPassword">Şifremi Unuttum?</a>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="button">Giriş Yap</button>
+            </div>
+        </form>
+
+
+        <!-- Kayıt Ol Linki -->
+        <div class="register-link">
+            <p><a asp-controller="Account" asp-action="Register">Hesabınız yok mu? Kayıt Ol</a></p>
+        </div>
+    </div>
+
+    <script src="~/js/index.js" asp-append-version="true"></script>
+</body>
+</html>

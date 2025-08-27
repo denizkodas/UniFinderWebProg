@@ -1,0 +1,238 @@
+.profile {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+    margin-left: 100px;
+}
+
+.profile-card {
+    width: 350px;
+    height: 600px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+}
+
+    .profile-card::-webkit-scrollbar {
+        display: none; /* Webkit tabanlý tarayýcýlar (Chrome, Safari) için kaydýrma çubuðunu gizler */
+    }
+.tno {
+    position: absolute;
+    cursor: pointer;
+    right: 8px;
+    transition: transform 0.2s;
+    z-index: 999999;
+    top: 2px;
+    
+    
+}
+.tno:hover {
+    transform: scale(1.05);
+}
+
+.remove-photo {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: #ff4e4e;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+
+.add-photo {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: linear-gradient(to bottom, #dd83d6, #7bcdee);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.photo-container {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin-top: 40px;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px; /* Photo-card'lar arasýndaki boþluðu artýrmak için bu deðeri deðiþtirebilirsiniz */
+    width: 100%;
+    max-width: 500px;
+   
+}
+
+.photo-card {
+    width: 93px;
+    height: 128px;
+    aspect-ratio: 1 / 1;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    background-color: #ececec;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-left: 5px;
+}
+
+.profile-photo1 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.action-btn1 {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+    
+
+.label1 {
+    align-items: center;
+}
+
+.photo-containers, .photo-containers2 {
+    display: flex;
+}
+
+.photo-label {
+    padding: 15px;
+    margin-top: 10px;
+    
+}
+
+.bio-label {
+    text-align: left;
+    align-items: center;
+    padding-right: 10px;
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+.label2 {
+    padding: 22px;
+}
+
+.bio-text {
+    height: 60px;
+    width: 300px;
+    border: none;
+    resize: none;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+.email, .universite, .lokasyon {
+    text-align: left;
+    align-items: center;
+    padding-right: 10px;
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+.email-label, .universite-label, .lokasyon-label {
+    text-align: left;
+    align-items: center;
+    padding: 22px;
+    margin-top: 15px;
+}
+
+.email-text, .universite-text, .lokasyon-text {
+    width: 300px;
+    border: none;
+    resize: none;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.save {
+    display: flex;
+    position: sticky; /* Kaydýrmaya baðlý olarak sabitlenir */
+    bottom: 0; /* En altta baþlar */
+    background: linear-gradient(to top, rgba(249, 249, 249, 0.5) 0%, rgba(249, 249, 249, 0) 100%); /* #f9f9f9 rengiyle transparanlýk */
+    padding: 10px 0; /* Buton için ek alan */
+    z-index: 10; /* Üstteki diðer içeriklerin altýnda kalmamasý için */
+    text-align: center; /* Ortalanmasý için */
+    justify-content: center;
+}
+
+.save-button {
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 15px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    background: linear-gradient(to bottom, #dd83d6, #7bcdee);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+    .save-button:hover {
+        transform: scale(1.05);
+    }

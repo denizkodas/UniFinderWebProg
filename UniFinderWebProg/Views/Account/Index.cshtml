@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniFinder</title>
+    <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="~/images/logo.png.png" alt="UniFinder Logo" style="height: 60px;
+            background: linear-gradient(to bottom, #dd83d6, #7bcdee);
+            border-radius: 15px;
+            margin-left: 15px;
+            width: 90px;">
+
+        </div>
+        <a href="/Account/Login" class="login-link">Giriş Yap</a>
+    </header>
+    <main class="main-content">
+        <h1>Hadi Sana Arkadaş Bulalım</h1>
+        <a href="/Account/Register">
+            <button class="register-button">Kaydol</button>
+    </main>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const registerButton = document.querySelector(".register-button");
+
+            registerButton.addEventListener("click", () => {
+                // Kullanıcıyı kaydolma sayfasına yönlendirme
+                window.location.href = "/Account/Register";
+            });
+
+            const loginLink = document.querySelector(".login-link");
+
+            loginLink.addEventListener("click", () => {
+                // Kullanıcıyı giriş yapma sayfasına yönlendirme
+                window.location.href = "/Account/Login";
+            });
+        });</script>
+
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('../images/logreg.jpeg') no-repeat center center fixed; /* Fotoðrafý arkaplan olarak ekledik */
+    background-size: cover; /* Fotoðrafýn ekraný tamamen kaplamasýný saðlar */
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.3); /* Beyaz ve %85 opaklýk */
+    padding: 20px 30px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+h1 {
+    font-size: 2rem;
+    padding: 30px;
+    text-align: center;
+}
+
+.form-group {
+    padding: 10px;
+}
+
+label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 35px;
+}
+
+.forgot-password {
+    text-align: right;
+    font-size: 0.9rem;
+    color: #007bff;
+    margin-top: 5px;
+}
+
+    .forgot-password a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background: linear-gradient(to bottom, #dd83d6, #7bcdee);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    .button:hover {
+        background: #0056b3;
+    }
+
+.register-link {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
+    .register-link a {
+        text-decoration: none;
+        color: #007bff;
+    }

@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniFinder - Geçiş Sayfası</title>
+    <link rel="stylesheet" href="~/css/Transition.css" asp-append-version="true">
+</head>
+<body>
+    <div class="transition-container">
+        <img src="~/images/logo.png.png" alt="UniFinder Logo" class="logo">
+    </div>
+    <script>
+        // Sayfa yüklendiğinde 3 saniye sonra ana sayfaya yönlendirme yapılacak
+
+        window.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                window.location.href = "/Account/Index"; // Ana sayfaya yönlendirme
+            }, 3000); // 3 saniye sonra geçiş
+        });
+
+    </script>
+
+
+</body>
+</html>

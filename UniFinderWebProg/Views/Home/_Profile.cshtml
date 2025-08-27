@@ -1,0 +1,31 @@
+﻿@model UniFinderWebProg.Models.User
+
+<div class="profile-card swipe-card">
+    <div class="profile-card">
+        <div class="slider-container">
+            <button class="slider-button slider-button-left" onclick="moveSlide(-1)">❮</button>
+            <img class="profile-card-image" src="https://via.placeholder.com/300x400" alt="Profile Image" id="profile-image">
+            <button class="slider-button slider-button-right" onclick="moveSlide(1)">❯</button>
+        </div>
+
+        <div class="profile-info">
+            <h2 id="profile-name">
+                @Model.Username, @Model.BirthDate
+            </h2>
+
+            <div class="tcontrols">
+                <div class="tno" onclick="handleLikeDislike(false)">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+
+                <div class="ti">
+                    <i class="fa fa-info" aria-hidden="true"></i>
+                </div>
+
+                <div class="tyes" onclick="handleLikeDislike(true)">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

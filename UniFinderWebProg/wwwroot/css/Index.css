@@ -1,0 +1,115 @@
+﻿/* Genel Ayarlar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: url("../images/index.jpeg") no-repeat center center/cover;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Üst Kısım (Header) */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 15px 30px; */
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    height: 80px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .logo img {
+        height: 80px;
+    }
+
+.site-name {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.login-link {
+    font-size: 1rem;
+    color: #2a16d8;
+    text-decoration: none;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 15px;
+    background: white;
+    transition: background 0.3s, color 0.3s;
+    margin-right: 15px;
+}
+
+    .login-link:hover {
+        background: linear-gradient(to bottom, #dd83d6, #7bcdee);
+        color: white;
+    }
+
+/* Ana İçerik */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+}
+
+    .main-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+.register-button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #2a16d8;
+    background: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+    .register-button:hover {
+        background: linear-gradient(to bottom, #dd83d6, #7bcdee);
+        color: white;
+    }
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .main-content h1 {
+        font-size: 2rem;
+    }
+
+    .register-button {
+        font-size: 1rem;
+        padding: 8px 15px;
+    }
+
+    .logo img {
+        height: 60px;
+        background: linear-gradient(to bottom, #dd83d6, #7bcdee);
+        border-radius: 15px;
+        margin-left: 15px;
+        width: 90px;
+    }
+
+    .site-name {
+        font-size: 1.3rem;
+    }
+}

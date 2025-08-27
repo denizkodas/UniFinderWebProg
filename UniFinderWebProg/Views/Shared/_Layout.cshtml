@@ -1,0 +1,87 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unifinder</title>
+    <link rel="stylesheet" href="~/css/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playwrite+IE+Guides&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sol Menü -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="~/images/logo.png.png" alt="DateApp Logo" class="logo">
+            </div>
+
+            <!-- Menü İkonları -->
+            <div class="icon-menu">
+                <div class="icon">
+                    <button-icon class="fa-regular fa-user" aria-hidden="true" onclick="location.href='@Url.Action("KendiProfil", "Home")'"></button-icon>
+                    <span class="sr-only">Profil</span>
+                </div>
+                <div class="icon">
+                    <button-icon class="fas fa-search" aria-hidden="true" onclick="location.href='@Url.Action("ProfileList", "Home")'"></button-icon>
+                    <span class="sr-only">Arama</span> 
+                </div>
+                <div class="icon">
+                    <button-icon class="fa fa-sign-out" aria-hidden="true" onclick="location.href='@Url.Action("Login", "Account")'"></button-icon>
+                    <span class="sr-only">Ayarlar</span>
+                </div>
+            </div>
+
+            <!-- Eşleşmeler -->
+            <div class="section-header">
+                <span>Matches</span>
+            </div>
+            <div class="cards" id="cards-container">
+                <a href="/Home/Match" class="card swipe-card">
+                    <div class="card-image yellow">
+                        <i class="star-icon">⭐</i>
+                    </div>
+                    <div class="card-text">
+                        Eşleşmeler
+                        <span id="match-count">(0)</span>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <div class="profile">
+            <main role="main" class="profile">
+                @RenderBody()
+            </main>
+        </div>
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+        <!-- MatchCount için AJAX -->
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: '/home/getmatchcount',
+                    type: 'GET',
+                    success: function (response) {
+                        if (response.success) {
+                            $('#match-count').text(`(${response.matchCount})`);
+                        } else {
+                            $('#match-count').text('(0)');
+                        }
+                    },
+                    error: function () {
+                        $('#match-count').text('(0)');
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
